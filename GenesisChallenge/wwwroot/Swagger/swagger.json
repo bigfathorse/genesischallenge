@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Genesis Challenge",
+    "contact": {
+      "email": "bigfathorse@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user"
+    }
+  ],
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "tags": [ "user" ],
+        "summary": "Signup User",
+        "operationId": "signup",
+        "requestBody": {
+          "description": "new user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "tags": [ "user" ],
+        "summary": "Signin User",
+        "operationId": "signin",
+        "requestBody": {
+          "description": "email & password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/users/search/{id}": {
+      "get": {
+        "tags": [ "user" ],
+        "summary": "return user",
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6287b791-3df1-4d34-a6f9-08d647ff22cc"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Stuart"
+          },
+          "email": {
+            "type": "string",
+            "example": "bigfathorse@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Abcd1234!"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "SignIn": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "bigfathorse@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Abcd1234!"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      }
+    },
+    
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
