@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GenesisChallenge.Services;
+using Microsoft.Extensions.Logging;
 
 namespace GenesisChallenge
 {
@@ -54,7 +55,7 @@ namespace GenesisChallenge
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +65,9 @@ namespace GenesisChallenge
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
     }
 }
